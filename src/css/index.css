@@ -1,0 +1,27 @@
+.App {
+  display: grid;
+  grid-template:
+    " . . . " 1fr
+    " . content . " 4fr
+    " . . ." 1fr
+    / 1fr 2fr 1fr;
+  justify-content: center;
+}
+
+.note-content {
+  grid-area: content;
+
+  display: grid;
+  grid-template:
+    "note-header" 1fr
+    "notes" 4fr
+    / 1fr;
+}
+
+.note-header {
+  grid-area: note-header;
+}
+
+.notes {
+  grid-area: notes;
+}

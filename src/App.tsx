@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends React.Component {
+  notes: String[] = ["a sample", "another one"];
+
+  addNote(note: String) {
+    this.notes = [...this.notes, note];
+  }
+
+  render() {
+    const renderedNotes = this.notes.map(note => (
+      <li className="mb-2">{note}</li>
+    ));
+
+    return (
+      <div className="App h-screen bg-gray-200">
+        <div className="note-content bg-white shadow-md rounded">
+          <div className="note-header">
+            <h1 className="text-sans text-center mt-8 mb-4 text-xl font-bold">
+              My Notes
+            </h1>
+            <div className="border-solid border border-gray-800 w-full" />
+          </div>
+          <div className="notes mx-8">
+            <ol className="list-decimal text-sans">{renderedNotes}</ol>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
-
-export default App;
