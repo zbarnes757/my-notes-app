@@ -1,15 +1,15 @@
 import React from "react";
 import { Note } from "./App";
+import NoteListItem from "./NoteListItem";
 
 interface INotesListProps {
   notes: Note[];
+  removeNote: (id: number) => void;
 }
 
-const NotesList: React.SFC<INotesListProps> = ({ notes }) => {
+const NotesList: React.SFC<INotesListProps> = ({ notes, removeNote }) => {
   const renderedNotes = notes.map(note => (
-    <li className="mb-2" key={note.id}>
-      {note.content}
-    </li>
+    <NoteListItem content={note.content} id={note.id} removeNote={removeNote} />
   ));
 
   return (

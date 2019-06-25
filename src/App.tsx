@@ -27,6 +27,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
     };
 
     this.addNote = this.addNote.bind(this);
+    this.removeNote = this.removeNote.bind(this);
     this.toggleIsAddingNote = this.toggleIsAddingNote.bind(this);
   }
 
@@ -36,6 +37,13 @@ export default class App extends React.Component<IAppProps, IAppState> {
       notes: [...notes, newNote],
       currentNoteId: currentNoteId + 1
     }));
+  }
+
+  removeNote(id: number) {
+    this.setState(({ notes }) => {
+      const newNotes = notes.filter(({ id: i }) => i !== id);
+      return { notes: newNotes };
+    });
   }
 
   toggleIsAddingNote() {
@@ -50,7 +58,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
         toggleIsAddingNote={this.toggleIsAddingNote}
       />
     ) : (
-      <NotesList notes={notes} />
+      <NotesList notes={notes} removeNote={this.removeNote} />
     );
 
     return (
