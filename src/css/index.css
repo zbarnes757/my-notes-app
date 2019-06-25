@@ -1,11 +1,17 @@
 .App {
   display: grid;
-  grid-template:
-    " . . . " 1fr
-    " . content . " 4fr
-    " . . ." 1fr
-    / 1fr 2fr 1fr;
+  grid-template: " content " 1fr / 1fr;
   justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .App {
+    grid-template:
+      " . . . " 1fr
+      " . content . " 4fr
+      " . . ." 1fr
+      / 1fr 2fr 1fr;
+  }
 }
 
 .note-content {
@@ -15,6 +21,7 @@
   grid-template:
     "note-header" 1fr
     "notes" 4fr
+    "note-button" 1fr
     / 1fr;
 }
 
@@ -24,4 +31,8 @@
 
 .notes {
   grid-area: notes;
+}
+
+.note-button {
+  grid-area: note-button;
 }
