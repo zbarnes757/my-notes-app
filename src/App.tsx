@@ -1,8 +1,8 @@
 import React from "react";
-import AddNoteButton from "./AddNoteButton";
-import NotesList from "./NotesList";
-import NoteHeader from "./NoteHeader";
-import AddNoteForm from "./AddNoteForm";
+import AddNoteButton from "./components/AddNoteButton";
+import NotesList from "./components/NotesList";
+import NoteHeader from "./components/NoteHeader";
+import AddNoteForm from "./components/AddNoteForm";
 
 export type Note = {
   id: number;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Note } from "./App";
+import { Note } from "../App";
 import NoteListItem from "./NoteListItem";
 
 interface INotesListProps {
