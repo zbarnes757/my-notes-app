@@ -4,7 +4,7 @@ interface IAddNoteButtonProps {
   onClick: () => void;
 }
 
-const AddNoteButton: React.SFC<IAddNoteButtonProps> = props => {
+const AddNoteButton: React.FC<IAddNoteButtonProps> = props => {
   return (
     <div className="add-note flex content-center">
       <button
