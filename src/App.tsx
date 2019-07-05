@@ -8,7 +8,6 @@ import AuthService from "./lib/AuthService";
 import Note from "./types/Note";
 
 const App: React.FC = () => {
-  const auth = AuthService;
   const [notes, setNotes] = useState<Note[]>([]);
   const [isAddingNote, setIseAddingNote] = useState(false);
   const [currentNoteId, setCurrentNoteId] = useState(0);
@@ -26,16 +25,20 @@ const App: React.FC = () => {
   const removeNote = (id: number): void =>
     setNotes(notes.filter(({ id: i }) => i !== id));
 
-  const getToken = (username: string, password: string) => {
-    AuthService.getToken(username, password).then(() =>
+  const authenticate = (
+    action: "login" | "signup",
+    username: string,
+    password: string
+  ): void => {
+    AuthService.authenticate({ action, username, password }).then(() =>
       setIsSignedIn(AuthService.isAuthorized())
     );
   };
 
   let mainContent: JSX.Element;
 
-  if (!auth.isAuthorized()) {
-    mainContent = <AuthenticationBox getToken={getToken} />;
+  if (!isSignedIn) {
+    mainContent = <AuthenticationBox authenticate={authenticate} />;
   } else if (isAddingNote) {
     mainContent = (
       <AddNoteForm addNote={addNote} toggleIsAddingNote={toggleIsAddingNote} />

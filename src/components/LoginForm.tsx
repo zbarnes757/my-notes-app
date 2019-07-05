@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 interface ILoginFormProps {
   switchToLogin: () => void;
-  getToken: (username: string, password: string) => void;
+  login: (username: string, password: string) => void;
 }
 
 interface ILoginFormState {
@@ -10,7 +10,7 @@ interface ILoginFormState {
   password: string;
 }
 
-const LoginForm: React.FC<ILoginFormProps> = ({ switchToLogin, getToken }) => {
+const LoginForm: React.FC<ILoginFormProps> = ({ switchToLogin, login }) => {
   const [formData, setFormData] = useState<ILoginFormState>({
     username: "",
     password: ""
@@ -18,7 +18,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({ switchToLogin, getToken }) => {
 
   return (
     <div>
-      <h1 className="text-center font-sans">Signup</h1>
+      <h1 className="text-center font-sans">Login</h1>
       <form className="bg-white px-8 pt-6 pb-8">
         <div className="mb-4">
           <label
@@ -60,7 +60,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({ switchToLogin, getToken }) => {
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
-            onClick={() => getToken(formData.username, formData.password)}
+            onClick={() => login(formData.username, formData.password)}
           >
             Login
           </button>

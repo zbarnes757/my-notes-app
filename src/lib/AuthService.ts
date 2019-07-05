@@ -1,13 +1,25 @@
-export interface IAuthService {
-  isAuthorized: () => boolean;
-  getToken: (username: string, password: string) => void;
-}
+import axios, { AxiosInstance } from "axios";
 
-class AuthService implements IAuthService {
+type AuthResponse = {
+  data: {
+    user: {
+      id: string;
+      username: string;
+    };
+    token: string;
+  };
+};
+
+class AuthService {
   private token: string | null;
+  authInstance: AxiosInstance = axios.create({
+    baseURL: "http://localhost:4000/api/v1"
+  });
 
   constructor() {
     this.token = localStorage.getItem("TOKEN");
+    this.authInstance.defaults.headers.post["Content-Type"] =
+      "application/json";
   }
 
   /**
@@ -16,17 +28,30 @@ class AuthService implements IAuthService {
    */
   public isAuthorized(): boolean {
     return !!this.token;
-    // return true;
   }
 
   /**
-   * getToken
+   * authenticate
    */
-  public getToken(username: string, password: string): Promise<string> {
-    // TODO: use axios to sign the user in
-    this.token = "my token!";
-    localStorage.setItem("TOKEN", "my token!");
-    return Promise.resolve("my token!");
+  public async authenticate({
+    action,
+    username,
+    password
+  }: {
+    action: "login" | "signup";
+    username: string;
+    password: string;
+  }): Promise<void> {
+    const {
+      data: {
+        data: { token }
+      }
+    } = await this.authInstance.post<AuthResponse>("/" + action, {
+      username,
+      password
+    });
+    this.token = token;
+    localStorage.setItem("TOKEN", token);
   }
 }
 

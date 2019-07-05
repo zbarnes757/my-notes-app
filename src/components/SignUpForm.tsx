@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { IAuthService } from "../lib/AuthService";
 
 interface ISignUpFormProps {
   switchToLogin: () => void;
-  getToken: (username: string, password: string) => void;
+  signup: (username: string, password: string) => void;
 }
 
 interface ISignUpFormState {
@@ -13,10 +12,7 @@ interface ISignUpFormState {
   isValid: boolean;
 }
 
-const SignUpForm: React.FC<ISignUpFormProps> = ({
-  switchToLogin,
-  getToken
-}) => {
+const SignUpForm: React.FC<ISignUpFormProps> = ({ switchToLogin, signup }) => {
   const [formData, setFormData] = useState<ISignUpFormState>({
     username: "",
     password: "",
@@ -46,7 +42,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
 
   const handleSubmit = () => {
     if (formData.isValid) {
-      getToken(formData.username, formData.password);
+      signup(formData.username, formData.password);
     }
   };
 
