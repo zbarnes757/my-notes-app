@@ -1,29 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { observer } from "mobx-react-lite";
 import AddNoteButton from "./components/AddNoteButton";
 import NotesList from "./components/NotesList";
 import NoteHeader from "./components/NoteHeader";
 import AddNoteForm from "./components/AddNoteForm";
 import AuthenticationBox from "./components/AuthenticationBox";
 import AuthService from "./lib/AuthService";
-import Note from "./types/Note";
+import { NotesStoreContext } from "./store/NotesStore";
 
-const App: React.FC = () => {
-  const [notes, setNotes] = useState<Note[]>([]);
+const App: React.FC = observer(() => {
+  const notesStore = useContext(NotesStoreContext);
   const [isAddingNote, setIseAddingNote] = useState(false);
-  const [currentNoteId, setCurrentNoteId] = useState(0);
   const [isSignedIn, setIsSignedIn] = useState(AuthService.isAuthorized());
 
   const toggleIsAddingNote = (): void => setIseAddingNote(!isAddingNote);
-
-  const addNote = (note: string): void => {
-    const id = currentNoteId + 1;
-    const newNote: Note = { id, content: note };
-    setNotes([...notes, newNote]);
-    setCurrentNoteId(id);
-  };
-
-  const removeNote = (id: number): void =>
-    setNotes(notes.filter(({ id: i }) => i !== id));
 
   const authenticate = (
     action: "login" | "signup",
@@ -40,13 +30,11 @@ const App: React.FC = () => {
   if (!isSignedIn) {
     mainContent = <AuthenticationBox authenticate={authenticate} />;
   } else if (isAddingNote) {
-    mainContent = (
-      <AddNoteForm addNote={addNote} toggleIsAddingNote={toggleIsAddingNote} />
-    );
+    mainContent = <AddNoteForm toggleIsAddingNote={toggleIsAddingNote} />;
   } else {
     mainContent = (
       <div>
-        <NotesList notes={notes} removeNote={removeNote} />
+        <NotesList notes={notesStore.notes} />
 
         <AddNoteButton onClick={toggleIsAddingNote} />
       </div>
@@ -62,6 +50,6 @@ const App: React.FC = () => {
       </div>
     </div>
   );
-};
+});
 
 export default App;

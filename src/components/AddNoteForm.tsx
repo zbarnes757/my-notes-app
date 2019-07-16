@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { NotesStoreContext } from "../store/NotesStore";
 
 interface IAddNoteFormProps {
   toggleIsAddingNote: () => void;
-  addNote: (note: string) => void;
 }
 
-const AddNoteForm: React.FC<IAddNoteFormProps> = ({
-  addNote,
-  toggleIsAddingNote
-}) => {
+const AddNoteForm: React.FC<IAddNoteFormProps> = ({ toggleIsAddingNote }) => {
+  const notesStore = useContext(NotesStoreContext);
   const [noteText, setNoteText] = useState("");
 
   const handleSubmit = () => {
-    addNote(noteText);
+    notesStore.addNote(noteText);
     toggleIsAddingNote();
   };
 

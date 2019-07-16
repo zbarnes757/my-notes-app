@@ -1,18 +1,19 @@
-import React from "react";
-import Note from "../types/Note";
+import React, { useContext } from "react";
 import NoteListItem from "./NoteListItem";
+import { NotesStoreContext } from "../store/NotesStore";
+import Note from "../types/Note";
 
 interface INotesListProps {
   notes: Note[];
-  removeNote: (id: number) => void;
 }
 
-const NotesList: React.FC<INotesListProps> = ({ notes, removeNote }) => {
+const NotesList: React.FC<INotesListProps> = ({ notes }) => {
+  const notesStore = useContext(NotesStoreContext);
   const renderedNotes = notes.map(note => (
     <NoteListItem
       content={note.content}
       id={note.id}
-      removeNote={() => removeNote(note.id)}
+      removeNote={() => notesStore.removeNote(note.id)}
     />
   ));
 
